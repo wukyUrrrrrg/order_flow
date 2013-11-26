@@ -1,0 +1,13 @@
+<% content_for :sub_menu do %>
+  <ul id="sub_nav">
+    <%= tab :orders, :match_path => '/orders' %>
+    <%= tab :ready_to_form_orders, :match_path => '/ready_to_form_orders' %>
+    <%= tab :courier_orders, :match_path => '/courier_orders' %>
+    <%= tab :self_delivery_orders, :match_path => '/self_delivery_orders' %>
+    <%= tab :abroad_orders, :match_path => '/abroad_orders' %>
+    <%= tab :waiting_e_money_orders, :match_path => '/waiting_e_money_orders' %>
+    <%= tab :paused_orders, :match_path => '/paused_orders' %>
+    <%#= tab :overdue_orders, :match_path => '/overdue_orders' %>
+    <%= tab :need_payment_orders, :match_path => '/need_payment_orders' %>
+  </ul>
+<% end %>

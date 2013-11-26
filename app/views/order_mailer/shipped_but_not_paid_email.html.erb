@@ -1,0 +1,26 @@
+<html>
+  <body>
+    <p>Приветствую вас, <%= @order.ship_address.firstname if @order.ship_address %>,<br />
+      
+      Ваш заказ <%= link_to_unless(@order.user.nil? || @order.user.anonymous?, "заказ №#{@order.number}", order_url(@order, :only_path => false)) do |name|
+				 name
+			       end %>, был отправлен более 20 дней назад, и уже <strong>должен ожидать вас на почте</strong>.<br />
+      
+      <%= "Если вам еще не приходила квитанция, то мы рекомендуем вам узнать где находится ваш заказ.
+ #{russian_post_delivery_status_link(@order.shipment.tracking)},
+Если посылка уже ждёт вас на почте, то рекомендуем вам, вооружившись номером посылки, сходить за заказом не дожидаясь квитанции (они не всегда приходят) <br /><br />".html_safe  unless @order.shipment.tracking.blank? %>
+      <%= "Уникальный номер вашей посылки: #{@order.shipment.tracking} <br />".html_safe unless @order.shipment.tracking.blank? %>
+      Если же вы уже получили ваш заказ, то, видимо, информация об оплате ещё не дошла до нас (возможны задержки в несколько дней), в этом случае ничего предпринимать не требуется. <br /><br />
+      Напоминаем, что на почте ваш заказ может пролежать максимум месяц (иногда меньше), кроме того за каждый день хранения после пятого с вас будут высчитывать дополнительную денежку за хранение посылки (хотя могут и не высчитать - зависит от отделения почты). Так что в любом случае рекомендуем вам не затягивать с походом на почту!<br />
+
+    <%= render :partial => 'shared/order_details', :locals => {:order => @order} -%>
+
+    <br/>
+
+    <%= link_to t(:order_status), order_url(@order, :only_path => false) %><br />
+    <%= link_to(t(:all_your_orders), account_url(:only_path => false)) unless (@order.user.nil? || @order.user.anonymous?)%><br />
+    <p>успехов, <br />
+      команда Концептуал.ru</p>
+  </body>
+</html>
+

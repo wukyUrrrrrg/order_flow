@@ -1,0 +1,21 @@
+<html>
+  <body>
+    <p>Здравия вам<%= (', ' + @shipment.address.firstname) if @shipment.address %>,<br />
+      
+      Недавно вы сделали <%= link_to_unless(@shipment.order.user.nil? || @shipment.order.user.anonymous?, "заказ №#{@shipment.order.number}", order_url(@shipment.order, :only_path => false)) do |name|
+					  name
+					end %> на сайте <a href='http://konzeptual.ru'>Концептуал.ru</a>.<br />
+
+      <%= @shipment.shipping_method.shipping_confirmation_text.html_safe %>
+      <%#= "Уникальный номер вашей посылки: #{@shipment.tracking} <br />".html_safe unless @shipment.tracking.blank? %>
+      <%= "#{russian_post_delivery_status_link @shipment.tracking} <br /><br />".html_safe  unless @shipment.tracking.blank? %>
+      <%= link_to t(:order_status), order_url(@shipment.order, :only_path => false) %><br />
+      <%= link_to(t(:all_your_orders), account_url(:only_path => false)) unless (@shipment.order.user.nil? || @shipment.order.user.anonymous?)%><br />
+
+      Если вам понравились материалы и сервис Концептуал.ru, можете оставить о нас отзыв на <a href="http://clck.yandex.ru/redir/dtype=stred/pid=47/cid=2508/*http://grade.market.yandex.ru/?id=39828&action=link">Яндекс-маркете</a>.
+
+    <p>успехов вам, <br />
+      команда Концептуал.ru</p>
+  </body>
+</html>
+

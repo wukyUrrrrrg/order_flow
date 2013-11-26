@@ -1,0 +1,14 @@
+<html>
+  <body>
+    <p>Доброго времени<%= ', ' + @shipment.address.firstname if @shipment.address %>,<br />
+      
+      Уведомляем вас о том, что товары для вашего <%= link_to_unless(@shipment.order.user.nil? || @shipment.order.user.anonymous?, "заказа №#{@shipment.order.number}", order_url(@shipment.order, :only_path => false)) do |name|
+								   name
+								 end %> на сайте <a href='http://konzeptual.ru'>Концептуал.ru</a>
+      были зарезервированы.<br />
+      <%= @shipment.shipping_method.description.html_safe unless @shipment.shipping_method.nil? %><br />
+      
+    <p>добра, <br />
+      команда Концептуал.ru</p>
+  </body>
+</html>

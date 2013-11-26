@@ -1,0 +1,28 @@
+<html>
+  <body>
+    <p>Здравствуйте, <%= @order.ship_address.firstname if @order.ship_address %>,<br />
+      
+      Вы сделали <%= link_to_unless(@order.user.nil? || @order.user.anonymous?, "заказ №#{@order.number}", order_url(@order, :only_path => false)) do |name|
+				  name
+				end %> на сайте <a href='http://konzeptual.ru'>Концептуал.ru</a>. Детали заказа представлены ниже</p>
+
+    <%= render :partial => 'shared/order_details', :locals => {:order => @order} -%>
+
+    <br/>
+    <% if @order.shipment.by_post? or @order.shipment.by_courier?-%>
+      Пожалуйста, проверьте ваши контактные данные, и, если обнаружите ошибку - дайте нам знать, ответив на данное письмо.
+      <%= render :partial => 'admin/shared/address', :locals => {:address => @order.ship_address} %>
+    <% end -%>
+    
+    <strong>Оплата</strong><br />
+
+    Метод оплаты: <strong><%= @order.payment.payment_method.name %></strong> <br />
+    <p><%= @order.payment.payment_method.description.html_safe %></p>
+
+    <%= link_to t(:order_status), order_url(@order, :only_path => false) %><br />
+    <%= link_to(t(:all_your_orders), account_url(:only_path => false)) unless (@order.user.nil? || @order.user.anonymous?)%> <br />
+    <p>благ вам, <br />
+      команда Концептуал.ru</p>
+  </body>
+</html>
+

@@ -1,0 +1,6 @@
+<%# Форма для  быстрого присваивания индекса %>
+<%= form_for(@order.shipment, :url => admin_order_shipment_url(@order, @order.shipment), :html => { :method => :put }) do |shipment_form| %>
+  <%= shipment_form.label :tracking, t('tracking') + ":" %>
+  <%= shipment_form.text_field :tracking %>
+  <%= (russian_post_delivery_status_link @order.shipment.tracking).html_safe unless @order.shipment.tracking.blank?%>
+<% end if @order.shipment%>
